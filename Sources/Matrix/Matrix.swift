@@ -1,89 +1,175 @@
-public struct Matrix {
-    var Mat = [[Int]]()
-    let Rows: Int
-    let Columns: Int
-    var Size: Int { return Rows * Columns }
-    var Shape: (Int, Int) { return (Rows, Columns) }
+import Foundation
 
-    public init(_ rows: Int, _ columns: Int, _ val: Int = 0) {
-        Rows = rows
-        Columns = columns
-        Mat = Array(repeating: Array(repeating: val, count: columns), count: rows)
-    }
-}
-
-extension Matrix {
-    var Describe: String { return "Rows  = \(Rows) \nColumns = \(Columns) \nTotalEmenents = \(Rows * Columns)" }
-}
-
-extension Matrix {
-    public init(_ rows: Int, _ columns: Int, _ val: [Int]) throws {
-        guard rows * columns == val.count else {
-            throw MatrixOperationErrors.elementsCountMismatch(rows: rows, columns: columns, totalElements: val.count)
+extension Array  where Element : BinaryInteger {
+    func reduceTo2d(_ row: UInt, _ col: UInt) -> [[Element]] {
+        guard self.count == row*col else {
+            print("Elements count does not match \(self.count) != \(row*col)")
+            return [[Element]]()
         }
-        self.init(rows, columns)
-        var arrayIndex = 0
-        print("vals = \(val)")
-        for (rowIdx, elements) in Mat.enumerated() {
-            let tmpArray = Array(val[arrayIndex ..< (arrayIndex + columns)])
-            print("rowidx = \(rowIdx), arrayIndex = \(arrayIndex) val = \(tmpArray) elements count = \(elements.count)")
-            Mat[rowIdx] = Array(tmpArray)
-            arrayIndex += tmpArray.count
-        }
-    }
-}
-
-extension Matrix {
-    public func Display() {
-        for item in Mat {
-            var pv: String = ""
-            for i in item {
-                pv += "\(i) "
+        var retArray = [[Element]]()
+        var tmpArray = [Element]()
+        for (index, item) in self.enumerated()  {
+            tmpArray.append(item)
+            if ((index+1) % Int(col) == 0) {
+                retArray.append(tmpArray)
+                tmpArray.removeAll()
             }
-            print("\(pv)")
+        }
+        return retArray
+    }
+}
+
+//struct Matrix<T>  where T : Numeric {
+struct Matrix<T>  where T : BinaryInteger {
+    private var Mat: [[T]]
+    let rows: UInt
+    let columns: UInt
+}
+
+extension  Matrix {
+    var size: UInt { return rows*columns }
+    var shape: (UInt, UInt) { return (rows, columns)}
+
+    init(withRows rows:UInt, withColumns columns:UInt, withDefalutValue val: T = 0) {
+        self.init(rows,columns,val)
+    }
+
+    init(_ rows:UInt , _ columns:UInt, _ val:T = 0) {
+        self.rows = rows
+        self.columns = columns
+        self.Mat = Array.init(repeating: Array.init(repeating: val, count: Int(columns)), count: Int(rows))
+    }
+
+    init(_ arryOfArray:[[T]]) {
+        guard arryOfArray.count > 0 else {
+            self.rows = 0
+            self.columns = 0
+            self.Mat = [[T]]()
+            return
+        }
+
+        let colCount = arryOfArray[0].count
+        for rows in arryOfArray {
+            guard rows.count == colCount else {
+                self.rows = 0
+                self.columns = 0
+                self.Mat = [[T]]()
+                return
+            }
+        }
+        self.Mat = arryOfArray
+        self.rows = UInt(arryOfArray.count)
+        self.columns = UInt(colCount)
+    }
+
+    init(_ array:[T], _ row: UInt, _ col: UInt) {
+        guard array.count == row * col else {
+            print("Elements count mismatch \(array.count) != \(row) * \(col)")
+            self.rows = 0
+            self.columns = 0
+            self.Mat = [[T]]()
+            return
+        }
+        self.rows = row
+        self.columns = col
+        self.Mat = array.reduceTo2d(row, col)
+    }
+}
+
+extension  Matrix : Equatable {
+    static func == (_ lhs:Matrix, _ rhs:Matrix) -> Bool {
+        guard (lhs.rows == rhs.rows) && (lhs.columns == rhs.columns) else {
+            return false
+        }
+        return lhs.Mat.flatMap { $0 } == rhs.Mat.flatMap { $0 }
+    }
+}
+
+extension Matrix {
+    func max() -> T {
+        let flat = self.Mat.flatMap {$0}
+        return flat.max() ?? 0
+    }
+
+    func min() -> T {
+        let flat = self.Mat.flatMap {$0}
+        return flat.min() ?? 0
+    }
+}
+
+extension Matrix {
+    func average() -> Double {
+        let flat = self.Mat.flatMap {$0}
+        return Double(flat.reduce(0, +))/Double(flat.count)
+    }
+}
+
+extension Matrix {
+    func isSquare() -> Bool {
+        return self.rows == self.columns
+    }
+}
+
+extension Matrix {
+    // If the index is out of bounds, just return the last row.
+    subscript(id: Int) -> [T] {
+        if id < 0 || id >= self.rows {
+            return self.Mat[Int(self.rows) - 1]
+
+        } else {
+            return self.Mat[id]
+        }
+    }
+
+    // If the index is out of bounds, just return the last row last column element.
+    subscript(idRow: Int, idCol:Int) -> T {
+        let interestedRow: [T] = self[idRow]
+        if idCol < 0 || idCol >= self.columns {
+           return interestedRow[Int(self.columns) - 1]
+        } else {
+           return interestedRow[idCol]
         }
     }
 }
 
 extension Matrix {
-    subscript(_ index: Int) -> [Int] {
-        guard -Rows ..< Rows ~= index else {
-            return []
-        }
-        let convertedIdx = index > 0 ? index : Rows - abs(index)
-        return Mat[convertedIdx]
+    func add(_ number:T) -> [[T]] {
+        let flat = self.Mat.flatMap { $0}
+        let addedMat = flat.map { $0 + number}
+        return addedMat.reduceTo2d(self.rows, self.columns)
     }
 }
 
-enum MatrixOperationErrors: Error {
-    case invalidIndex
-    case indexOutOfRange(index: Int)
-    case elementsCountMismatch(rows: Int, columns: Int, totalElements: Int)
-}
-/*
-do {
-    var m: Matrix = Matrix(3, 5, 3)
-    m.Display()
-    print("\(m.Size)")
-    print("\(m.Shape)")
-    print("\(m[2])")
-    print("\(m[-1])")
-} catch let MatrixOperationErrors.elementsCountMismatch(rows, columns, totalElements) {
-    print("Matrix elements mismatch, \(rows * columns) != \(totalElements)")
-}
+let A: Matrix<Int> = Matrix(3,4)
+let B: Matrix<Int> = Matrix(3,4,5)
+let C: Matrix<UInt> = Matrix(withRows: 3, withColumns: 4, withDefalutValue: 5)
+let D: Matrix<UInt> = Matrix(withRows: 3, withColumns: 4, withDefalutValue: 5)
 
-do {
-    var m1: Matrix = try Matrix(3, 3, Array(1 ... 9))
-    m1.Display()
-    print("\(m1[-1])")
-    print("\(m1[-2])")
-    print("\(m1[-3])")
-    print("\(m1.Describe)")
-} catch let MatrixOperationErrors.elementsCountMismatch(rows, columns, totalElements) {
-    print("Matrix elements mismatch, \(rows * columns) != \(totalElements)")
-}
+print(A)
+print(A.shape)
+print(A.size)
+print(A==B)
+print(D==C)
 
-var b: [Int] = [2, 4, 1, 10]
-print("\(b.index(of: b.max()!)!)")
-print("\(b.max()!)")
-*/
+let m = Array.init(repeating: Array.init(repeating: 5, count: 3), count: Int(3))
+print(m)
+print(m[0].count)
+print(m.count)
+
+print(A.max())
+print(B.max())
+print(C.max())
+print(D.max())
+let v = Matrix([[-1,-3,-5], [-2,-100,-3]])
+print(v.max())
+print(v.min())
+print(v[-1])
+print(v[-1,-1])
+
+print(v.average())
+print(v.isSquare())
+
+let t = Matrix([Int](1...8),2,4)
+print(t)
+
+print(t.add(4))
