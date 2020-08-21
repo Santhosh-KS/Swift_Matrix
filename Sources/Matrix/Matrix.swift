@@ -132,11 +132,56 @@ extension Matrix {
     }
 }
 
+// Adds a number to each element of the Matrix.
 extension Matrix {
     func add(_ number:T) -> [[T]] {
         let flat = self.Mat.flatMap { $0}
         let addedMat = flat.map { $0 + number}
         return addedMat.reduceTo2d(self.rows, self.columns)
+    }
+
+    func sub(_ number:T) -> [[T]] {
+        return add(number)
+    }
+}
+
+
+precedencegroup MatrixOperationPrecedence {
+    associativity: left
+}
+
+infix operator .+ : MatrixOperationPrecedence
+infix operator .- : MatrixOperationPrecedence
+
+// TODO: Optimize this piece of code .+ and .- has almost similar code.
+// Need to come up with a logic to make it one function
+extension Matrix {
+    static func .+(_ lhs: Matrix, _ rhs: Matrix) -> [[T]] {
+        guard (lhs.rows == rhs.rows) && (lhs.columns == rhs.columns)  else {
+            print("Matrix dimentions doesn't match \(lhs.shape) != \(rhs.shape)\n")
+            return [[T]]()
+        }
+        let flatLhs = lhs.Mat.flatMap {$0}
+        let flatRhs = rhs.Mat.flatMap {$0}
+        var result = [T]()
+        for (index, item) in flatLhs.enumerated() {
+            result.append(item + flatRhs[index])
+        }
+        return result.reduceTo2d(rhs.rows, rhs.columns)
+    }
+
+    static func .-(_ lhs: Matrix, _ rhs: Matrix) -> [[T]] {
+        guard (lhs.rows == rhs.rows) && (lhs.columns == rhs.columns)  else {
+            print("Matrix dimentions doesn't match \(lhs.shape) != \(rhs.shape)\n")
+            return [[T]]()
+        }
+        let flatLhs = lhs.Mat.flatMap {$0}
+        let flatRhs = rhs.Mat.flatMap {$0}
+        var result = [T]()
+        for (index, item) in flatLhs.enumerated() {
+            result.append(item - flatRhs[index])
+        }
+        return result.reduceTo2d(rhs.rows, rhs.columns)
     }
 }
 
@@ -170,6 +215,11 @@ print(v.average())
 print(v.isSquare())
 
 let t = Matrix([Int](1...8),2,4)
+let t1 = Matrix([Int](1...8),2,4)
 print(t)
+print(t1)
 
-print(t.add(4))
+//print(t.add(4))
+
+print("Matrix add \(t.+t1)")
+print("Matrix sub \(t.-t1)")
