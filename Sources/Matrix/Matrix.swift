@@ -1,6 +1,6 @@
 import Foundation
 
-extension Array  where Element : BinaryInteger {
+extension Array  where Element : Numeric & Comparable {
     func reduceTo2d(_ row: UInt, _ col: UInt) -> [[Element]] {
         guard self.count == row*col else {
             print("Elements count does not match \(self.count) != \(row*col)")
@@ -19,9 +19,8 @@ extension Array  where Element : BinaryInteger {
     }
 }
 
-//struct Matrix<T>  where T : Numeric {
-//struct Matrix<T>  where T : BinaryInteger {
-struct Matrix<T: BinaryInteger> {
+struct Matrix<T: Numeric & Comparable > {
+    //private var Mat: Array<Array<T>>
     private var Mat: [[T]]
     let rows: UInt
     let columns: UInt
@@ -46,6 +45,7 @@ extension  Matrix {
             self.rows = 0
             self.columns = 0
             self.Mat = [[T]]()
+            precondition(self.rows == 0, "Matrix is not initialized.")
             return
         }
 
@@ -55,6 +55,7 @@ extension  Matrix {
                 self.rows = 0
                 self.columns = 0
                 self.Mat = [[T]]()
+                precondition(self.rows == 0, "Matrix is not initialized.")
                 return
             }
         }
@@ -69,20 +70,63 @@ extension  Matrix {
             self.rows = 0
             self.columns = 0
             self.Mat = [[T]]()
+            precondition(self.rows == 0, "Matrix is not initialized.")
             return
         }
         self.rows = row
         self.columns = col
         self.Mat = array.reduceTo2d(row, col)
     }
+
+    init(_ array:[T], withRows rows:UInt) {
+        let columns: UInt = UInt(array.count) % rows
+        self.init(array, rows, columns)
+    }
+
+    init(_ array:[T], withColumns columns:UInt) {
+        let rows: UInt = UInt(array.count) % columns
+        self.init(array, rows, columns)
+    }
 }
 
-extension  Matrix : Equatable {
+extension  Matrix {
     static func == (_ lhs:Matrix, _ rhs:Matrix) -> Bool {
         guard (lhs.rows == rhs.rows) && (lhs.columns == rhs.columns) else {
             return false
         }
         return lhs.Mat.flatMap { $0 } == rhs.Mat.flatMap { $0 }
+    }
+
+    static func > (_ lhs:Matrix, _ rhs:Matrix) -> Bool {
+        guard (lhs.rows == rhs.rows) && (lhs.columns == rhs.columns) else {
+            return false
+        }
+        let lhsFlat = lhs.Mat.flatMap { $0 }
+        let rhsFlat = rhs.Mat.flatMap { $0 }
+
+        for idx in 0 ..< lhsFlat.count {
+            guard lhsFlat[idx] > rhsFlat[idx] else {
+                return false
+            }
+        }
+        return true
+    }
+
+    static func < (_ lhs:Matrix, _ rhs:Matrix) -> Bool {
+        guard (lhs.rows == rhs.rows) && (lhs.columns == rhs.columns) else {
+            return false
+        }
+        //let lhsFlatMap = Array(lhs.Mat.joined())
+        //let rhsFlatMap = Array(rhs.Mat.joined())
+        let lhsFlat = lhs.Mat.flatMap { $0 }
+        let rhsFlat = rhs.Mat.flatMap { $0 }
+
+        for idx in 0 ..< lhsFlat.count {
+            guard lhsFlat[idx] < rhsFlat[idx] else {
+                return false
+            }
+        }
+        return true
     }
 }
 
@@ -98,12 +142,14 @@ extension Matrix {
     }
 }
 
+/*
 extension Matrix {
     func average() -> Double {
         let flat = self.Mat.flatMap {$0}
         return Double(flat.reduce(0, +))/Double(flat.count)
     }
 }
+*/
 
 extension Matrix {
     func isSquare() -> Bool {
@@ -185,43 +231,3 @@ extension Matrix {
         return result.reduceTo2d(rhs.rows, rhs.columns)
     }
 }
-/*
-let A: Matrix<Int> = Matrix(3,4)
-let B: Matrix<Int> = Matrix(3,4,5)
-let C: Matrix<UInt> = Matrix(withRows: 3, withColumns: 4, withDefalutValue: 5)
-let D: Matrix<UInt> = Matrix(withRows: 3, withColumns: 4, withDefalutValue: 5)
-
-print(A)
-print(A.shape)
-print(A.size)
-print(A==B)
-print(D==C)
-
-let m = Array.init(repeating: Array.init(repeating: 5, count: 3), count: Int(3))
-print(m)
-print(m[0].count)
-print(m.count)
-
-print(A.max())
-print(B.max())
-print(C.max())
-print(D.max())
-let v = Matrix([[-1,-3,-5], [-2,-100,-3]])
-print(v.max())
-print(v.min())
-print(v[-1])
-print(v[-1,-1])
-
-print(v.average())
-print(v.isSquare())
-
-let t = Matrix([Int](1...8),2,4)
-let t1 = Matrix([Int](1...8),2,4)
-print(t)
-print(t1)
-
-//print(t.add(4))
-
-print("Matrix add \(t.+t1)")
-print("Matrix sub \(t.-t1)")
-*/

@@ -31,6 +31,20 @@ final class MatrixTests: XCTestCase {
         XCTAssertEqual(m[-1, -1], 0)
     }
 
+    func FloatRowColumnDefalutValue() {
+        let m = Matrix<Float>(3, 3)
+        XCTAssertEqual(m.rows, 3)
+        XCTAssertEqual(m.columns, 3)
+        XCTAssertEqual(m.shape.0, 3)
+        XCTAssertEqual(m.shape.1, 3)
+        XCTAssertEqual(m.size, 3*3)
+        XCTAssertEqual(m[1], [0,0,0])
+        XCTAssertEqual(m[1,1], 0)
+        XCTAssertEqual(m[-1], [0,0,0])
+        XCTAssertEqual(m[-20], [0,0,0])
+        XCTAssertEqual(m[-1, -1], 0)
+    }
+
     func IntRowColumnWithGivenValue() {
         let m = Matrix<Int>(3, 3, 5)
         XCTAssertEqual(m.rows, 3)
@@ -57,6 +71,20 @@ final class MatrixTests: XCTestCase {
         XCTAssertEqual(m[-2], [5,5,5])
         XCTAssertEqual(m[-1, -1], 5)
         XCTAssertEqual(m[1,1], 5)
+    }
+
+    func FloatRowColumnWithGivenValue() {
+        let m = Matrix<Float>(3, 3, 5.0)
+        XCTAssertEqual(m.rows, 3)
+        XCTAssertEqual(m.columns, 3)
+        XCTAssertEqual(m.shape.0, 3)
+        XCTAssertEqual(m.shape.1, 3)
+        XCTAssertEqual(m.size, 3*3)
+        XCTAssertEqual(m[1], [5.0,5.0,5.0])
+        XCTAssertEqual(m[1,1], 5.0)
+        XCTAssertEqual(m[-1], [5.0,5.0,5.0])
+        XCTAssertEqual(m[-2], [5.0,5.0,5.0])
+        XCTAssertEqual(m[-1, -1], 5.0)
     }
 
     func TestWithValid2dArrayInput() {
@@ -100,8 +128,10 @@ final class MatrixTests: XCTestCase {
     static var allTests = [
         ("IntRowColumnDefalutValue", IntRowColumnDefalutValue),
         ("UIntRowColumnDefalutValue", UIntRowColumnDefalutValue),
+        ("FloatRowColumnDefalutValue", FloatRowColumnDefalutValue),
         ("IntRowColumnWithGivenValue", IntRowColumnWithGivenValue),
         ("UIntRowColumnWithGivenValue", UIntRowColumnWithGivenValue),
+        ("FloatRowColumnWithGivenValue", FloatRowColumnWithGivenValue),
         ("TestWithValid2dArrayInput", TestWithValid2dArrayInput),
         ("TestWithEmpty2dArrayInput", TestWithEmpty2dArrayInput),
         ("TestWithMismatchedRowsAndColumns2dArrayInput", TestWithMismatchedRowsAndColumns2dArrayInput),
