@@ -20,7 +20,8 @@ extension Array  where Element : BinaryInteger {
 }
 
 //struct Matrix<T>  where T : Numeric {
-struct Matrix<T>  where T : BinaryInteger {
+//struct Matrix<T>  where T : BinaryInteger {
+struct Matrix<T: BinaryInteger> {
     private var Mat: [[T]]
     let rows: UInt
     let columns: UInt
@@ -184,7 +185,7 @@ extension Matrix {
         return result.reduceTo2d(rhs.rows, rhs.columns)
     }
 }
-
+/*
 let A: Matrix<Int> = Matrix(3,4)
 let B: Matrix<Int> = Matrix(3,4,5)
 let C: Matrix<UInt> = Matrix(withRows: 3, withColumns: 4, withDefalutValue: 5)
@@ -223,3 +224,4 @@ print(t1)
 
 print("Matrix add \(t.+t1)")
 print("Matrix sub \(t.-t1)")
+*/
