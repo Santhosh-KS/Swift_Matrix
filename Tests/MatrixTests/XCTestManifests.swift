@@ -1,9 +1,12 @@
+#if !canImport(ObjectiveC)
 import XCTest
 
-#if !canImport(ObjectiveC)
-public func allTests() -> [XCTestCaseEntry] {
+public func __allTests() -> [XCTestCaseEntry] {
     return [
-        testCase(MatrixTests.allTests),
+        //testCase(MatrixIntAndUintInitTests.__allTests__MatrixInitTests),
+        //testCase(MatrixFloatAndDoubleInitTests.__allTests__MatrixInitTests),
+        //testCase(MatrixIndexingOperations.__allTests__MatrixIndexTests),
+        testCase(MatrixOperationsTests.__allTests__MatrixOperationsTests),
     ]
 }
 #endif

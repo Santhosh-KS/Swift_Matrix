@@ -1,139 +1,563 @@
-@testable import Matrix
 import XCTest
+@testable import Matrix
 
-final class MatrixTests: XCTestCase {
+final class MatrixIntAndUintInitTests: XCTestCase {
 
-    func IntRowColumnDefalutValue() {
-        let m = Matrix<Int>(3, 3)
+    func matrixCreationIntWithDefaultValue() {
+        let m = Matrix<Int>(3,3)
         XCTAssertEqual(m.rows, 3)
         XCTAssertEqual(m.columns, 3)
-        XCTAssertEqual(m.shape.0, 3)
-        XCTAssertEqual(m.shape.1, 3)
         XCTAssertEqual(m.size, 3*3)
+        XCTAssertEqual(m.shape.rows, 3)
+        XCTAssertEqual(m.shape.columns, 3)
         XCTAssertEqual(m[1], [0,0,0])
         XCTAssertEqual(m[1,1], 0)
-        XCTAssertEqual(m[-1], [0,0,0])
-        XCTAssertEqual(m[-10], [0,0,0])
-        XCTAssertEqual(m[-1, -1], 0)
     }
 
-    func UIntRowColumnDefalutValue() {
-        let m = Matrix<UInt>(3, 3)
+    func matrixCreationIntWithGivenValue() {
+        let m = Matrix<Int>(3, 3, with: 6)
         XCTAssertEqual(m.rows, 3)
         XCTAssertEqual(m.columns, 3)
-        XCTAssertEqual(m.shape.0, 3)
-        XCTAssertEqual(m.shape.1, 3)
         XCTAssertEqual(m.size, 3*3)
+        XCTAssertEqual(m.shape.rows, 3)
+        XCTAssertEqual(m.shape.columns, 3)
+        XCTAssertEqual(m[1], [6,6,6])
+        XCTAssertEqual(m[1,1], 6)
+    }
+
+    func matrixCreationUintWithDefaultValue() {
+        let m = Matrix<UInt>(3,3)
+        XCTAssertEqual(m.rows, 3)
+        XCTAssertEqual(m.columns, 3)
+        XCTAssertEqual(m.size, 3*3)
+        XCTAssertEqual(m.shape.rows, 3)
+        XCTAssertEqual(m.shape.columns, 3)
         XCTAssertEqual(m[1], [0,0,0])
         XCTAssertEqual(m[1,1], 0)
-        XCTAssertEqual(m[-1], [0,0,0])
-        XCTAssertEqual(m[-20], [0,0,0])
-        XCTAssertEqual(m[-1, -1], 0)
     }
 
-    func FloatRowColumnDefalutValue() {
-        let m = Matrix<Float>(3, 3)
+    func matrixCreationUintWithGivenValue() {
+        let m = Matrix<Int>(3, 3, with: 6)
         XCTAssertEqual(m.rows, 3)
         XCTAssertEqual(m.columns, 3)
-        XCTAssertEqual(m.shape.0, 3)
-        XCTAssertEqual(m.shape.1, 3)
         XCTAssertEqual(m.size, 3*3)
-        XCTAssertEqual(m[1], [0,0,0])
-        XCTAssertEqual(m[1,1], 0)
-        XCTAssertEqual(m[-1], [0,0,0])
-        XCTAssertEqual(m[-20], [0,0,0])
-        XCTAssertEqual(m[-1, -1], 0)
+        XCTAssertEqual(m.shape.rows, 3)
+        XCTAssertEqual(m.shape.columns, 3)
+        XCTAssertEqual(m[1], [6,6,6])
+        XCTAssertEqual(m[1,1], 6)
     }
 
-    func IntRowColumnWithGivenValue() {
-        let m = Matrix<Int>(3, 3, 5)
+    func matrixCreationWithIntArrayOfArray() {
+        let m = Matrix<Int>([[1,1,1],[2,2,2], [3,3,3]])
         XCTAssertEqual(m.rows, 3)
         XCTAssertEqual(m.columns, 3)
-        XCTAssertEqual(m.shape.0, 3)
-        XCTAssertEqual(m.shape.1, 3)
         XCTAssertEqual(m.size, 3*3)
-        XCTAssertEqual(m[1], [5,5,5])
-        XCTAssertEqual(m[1,1], 5)
-        XCTAssertEqual(m[-1], [5,5,5])
-        XCTAssertEqual(m[-2], [5,5,5])
-        XCTAssertEqual(m[-1, -1], 5)
+        XCTAssertEqual(m.shape.rows, 3)
+        XCTAssertEqual(m.shape.columns, 3)
+        XCTAssertEqual(m[1], [2,2,2])
+        XCTAssertEqual(m[1,1], 2)
     }
 
-    func UIntRowColumnWithGivenValue() {
-        let m = Matrix<UInt>(3, 3, 5)
+    func matrixCreationWithUintArrayOfArray() {
+        let m = Matrix<UInt>([[1,1,1],[2,2,2], [3,3,3]])
         XCTAssertEqual(m.rows, 3)
         XCTAssertEqual(m.columns, 3)
-        XCTAssertEqual(m.shape.0, 3)
-        XCTAssertEqual(m.shape.1, 3)
         XCTAssertEqual(m.size, 3*3)
-        XCTAssertEqual(m[1], [5,5,5])
-        XCTAssertEqual(m[-1], [5,5,5])
-        XCTAssertEqual(m[-2], [5,5,5])
-        XCTAssertEqual(m[-1, -1], 5)
-        XCTAssertEqual(m[1,1], 5)
+        XCTAssertEqual(m.shape.rows, 3)
+        XCTAssertEqual(m.shape.columns, 3)
+        XCTAssertEqual(m[1], [2,2,2])
+        XCTAssertEqual(m[1,1], 2)
     }
 
-    func FloatRowColumnWithGivenValue() {
-        let m = Matrix<Float>(3, 3, 5.0)
-        XCTAssertEqual(m.rows, 3)
-        XCTAssertEqual(m.columns, 3)
-        XCTAssertEqual(m.shape.0, 3)
-        XCTAssertEqual(m.shape.1, 3)
-        XCTAssertEqual(m.size, 3*3)
-        XCTAssertEqual(m[1], [5.0,5.0,5.0])
-        XCTAssertEqual(m[1,1], 5.0)
-        XCTAssertEqual(m[-1], [5.0,5.0,5.0])
-        XCTAssertEqual(m[-2], [5.0,5.0,5.0])
-        XCTAssertEqual(m[-1, -1], 5.0)
+    func matrixCreationWithInvalidUintArrayOfArray() {
+        var m = Matrix<UInt>([[1,1,1],[2], [3,3,3]])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<UInt>([[], [], []])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<UInt>([[],[2], [3,3,3]])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<UInt>([[2], [], [3,3,3]])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<UInt>([[2], [3,3,3], []])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<UInt>([[]])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
     }
 
-    func TestWithValid2dArrayInput() {
-        let array = [[1,1,1],[2,2,2]]
-        let m = Matrix(array)
+    func matrixCreationWithInvalidIntArrayOfArray() {
+        var m = Matrix<Int>([[1,1,1],[2], [3,3,3]])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
 
+        m = Matrix<Int>([[], [], []])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Int>([[],[2], [3,3,3]])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Int>([[2], [], [3,3,3]])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Int>([[2], [3,3,3], []])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Int>([[]])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+    }
+
+    func matrixCreationWithValidIntArray() {
+        var m = Matrix<Int>([1,2,3,4,5,6], 2, 3)
         XCTAssertEqual(m.rows, 2)
         XCTAssertEqual(m.columns, 3)
-        XCTAssertEqual(m.shape.0, 2)
-        XCTAssertEqual(m.shape.1, 3)
-        XCTAssertEqual(m.size, 2*3)
-        XCTAssertEqual(m[0], [1,1,1])
-        XCTAssertEqual(m[1], [2,2,2])
-        XCTAssertEqual(m[-1], [2,2,2])
-        XCTAssertEqual(m[-1,-1], 2 )
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 2)
+        XCTAssertEqual(m.shape.columns, 3)
+        XCTAssertEqual(m[1], [4,5,6])
+        XCTAssertEqual(m[1,1], 5)
+
+        m = Matrix<Int>([1], 1, 1)
+        XCTAssertEqual(m.rows, 1)
+        XCTAssertEqual(m.columns, 1)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 1)
+        XCTAssertEqual(m.shape.columns, 1)
+        XCTAssertEqual(m[0], [1])
+        XCTAssertEqual(m[0,0], 1)
     }
 
-    func TestWithEmpty2dArrayInput() {
-        let array = [[Int]]()
-        let m = Matrix(array)
-
+    func matrixCreationWithInvalidIntArray() {
+        var m = Matrix<Int>([1,2,3,4,5,6,7], 2, 3)
         XCTAssertEqual(m.rows, 0)
         XCTAssertEqual(m.columns, 0)
-        XCTAssertEqual(m.shape.0, 0)
-        XCTAssertEqual(m.shape.1, 0)
-        XCTAssertEqual(m.size, 0)
-    }
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
 
-    func TestWithMismatchedRowsAndColumns2dArrayInput() {
-        // rows != columns
-        let array = [[1,1,1],[2,2]]
-        let m = Matrix(array)
-
+        m = Matrix<Int>([], 0, 0)
         XCTAssertEqual(m.rows, 0)
         XCTAssertEqual(m.columns, 0)
-        XCTAssertEqual(m.shape.0, 0)
-        XCTAssertEqual(m.shape.1, 0)
-        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Int>([], 1, 1)
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
     }
 
-    static var allTests = [
-        ("IntRowColumnDefalutValue", IntRowColumnDefalutValue),
-        ("UIntRowColumnDefalutValue", UIntRowColumnDefalutValue),
-        ("FloatRowColumnDefalutValue", FloatRowColumnDefalutValue),
-        ("IntRowColumnWithGivenValue", IntRowColumnWithGivenValue),
-        ("UIntRowColumnWithGivenValue", UIntRowColumnWithGivenValue),
-        ("FloatRowColumnWithGivenValue", FloatRowColumnWithGivenValue),
-        ("TestWithValid2dArrayInput", TestWithValid2dArrayInput),
-        ("TestWithEmpty2dArrayInput", TestWithEmpty2dArrayInput),
-        ("TestWithMismatchedRowsAndColumns2dArrayInput", TestWithMismatchedRowsAndColumns2dArrayInput),
+    func matrixCreationWithValidUintArray() {
+        var m = Matrix<UInt>([1,2,3,4,5,6], 2, 3)
+        XCTAssertEqual(m.rows, 2)
+        XCTAssertEqual(m.columns, 3)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 2)
+        XCTAssertEqual(m.shape.columns, 3)
+        XCTAssertEqual(m[1], [4,5,6])
+        XCTAssertEqual(m[1,1], 5)
+
+        m = Matrix<UInt>([10], 1, 1)
+        XCTAssertEqual(m.rows, 1)
+        XCTAssertEqual(m.columns, 1)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 1)
+        XCTAssertEqual(m.shape.columns, 1)
+        XCTAssertEqual(m[0], [10])
+        XCTAssertEqual(m[0,0], 10)
+    }
+
+    func matrixCreationWithInvalidUintArray() {
+        var m = Matrix<UInt>([1,2,3,4,5,6,7], 2, 3)
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<UInt>([], 0, 0)
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<UInt>([], 1, 1)
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+    }
+
+
+    static var __allTests__MatrixInitTests = [
+        ("matrixCreationIntWithDefaultValue", matrixCreationIntWithDefaultValue),
+        ("matrixCreationIntWithGivenValue", matrixCreationIntWithGivenValue),
+        ("matrixCreationUintWithDefaultValue", matrixCreationUintWithDefaultValue),
+        ("matrixCreationUintWithGivenValue", matrixCreationUintWithGivenValue),
+        ("matrixCreationWithIntArrayOfArray", matrixCreationWithIntArrayOfArray),
+        ("matrixCreationWithUintArrayOfArray", matrixCreationWithUintArrayOfArray),
+        ("matrixCreationWithInvalidUintArrayOfArray", matrixCreationWithInvalidUintArrayOfArray),
+        ("matrixCreationWithInvalidIntArrayOfArray", matrixCreationWithInvalidIntArrayOfArray),
+        ("matrixCreationWithValidIntArray", matrixCreationWithValidIntArray),
+        ("matrixCreationWithValidUintArray", matrixCreationWithValidUintArray),
+        ("matrixCreationWithInvalidIntArray", matrixCreationWithInvalidIntArray),
+        ("matrixCreationWithInvalidUintArray", matrixCreationWithInvalidUintArray),
+    ]
+}
+
+final class MatrixFloatAndDoubleInitTests: XCTestCase {
+
+    func matrixCreationWithDefaultValue() {
+        let m = Matrix<Float>(3,3)
+        XCTAssertEqual(m.rows, 3)
+        XCTAssertEqual(m.columns, 3)
+        XCTAssertEqual(m.size, 3*3)
+        XCTAssertEqual(m.shape.rows, 3)
+        XCTAssertEqual(m.shape.columns, 3)
+        XCTAssertEqual(m[1], [0.0,0.0,0.0])
+        XCTAssertEqual(m[1,1], 0.0)
+    }
+
+    func matrixCreationWithFloatGivenValue() {
+        let m = Matrix<Float>(3, 3, with: 6.1)
+        XCTAssertEqual(m.rows, 3)
+        XCTAssertEqual(m.columns, 3)
+        XCTAssertEqual(m.size, 3*3)
+        XCTAssertEqual(m.shape.rows, 3)
+        XCTAssertEqual(m.shape.columns, 3)
+        XCTAssertEqual(m[1], [6.1,6.1,6.1])
+        XCTAssertEqual(m[1,1], 6.1)
+    }
+
+    func matrixCreationWithDoubleDefaultValue() {
+        let m = Matrix<Double>(3,3)
+        XCTAssertEqual(m.rows, 3)
+        XCTAssertEqual(m.columns, 3)
+        XCTAssertEqual(m.size, 3*3)
+        XCTAssertEqual(m.shape.rows, 3)
+        XCTAssertEqual(m.shape.columns, 3)
+        XCTAssertEqual(m[1], [0.0,0.0,0.0])
+        XCTAssertEqual(m[1,1], 0.0)
+    }
+
+    func matrixCreationWithDoubleGivenValue() {
+        let m = Matrix<Double>(3, 3, with: 6.1)
+        XCTAssertEqual(m.rows, 3)
+        XCTAssertEqual(m.columns, 3)
+        XCTAssertEqual(m.size, 3*3)
+        XCTAssertEqual(m.shape.rows, 3)
+        XCTAssertEqual(m.shape.columns, 3)
+        XCTAssertEqual(m[1], [6.1,6.1,6.1])
+        XCTAssertEqual(m[1,1], 6.1)
+    }
+
+    func matrixCreationWithDoubleArrayOfArray() {
+        let m = Matrix<Double>([[1.1,1.1, 1.1],[2.2,2.2,2.2], [3.3,3.3,3.3]])
+        XCTAssertEqual(m.rows, 3)
+        XCTAssertEqual(m.columns, 3)
+        XCTAssertEqual(m.size, 3*3)
+        XCTAssertEqual(m.shape.rows, 3)
+        XCTAssertEqual(m.shape.columns, 3)
+        XCTAssertEqual(m[1], [2.2,2.2,2.2])
+        XCTAssertEqual(m[1,1], 2.2)
+    }
+
+    func matrixCreationWithFloatArrayOfArray() {
+        let m = Matrix<Float>([[1.1,1.1, 1.1],[2.2,2.2,2.2], [3.3,3.3,3.3]])
+        XCTAssertEqual(m.rows, 3)
+        XCTAssertEqual(m.columns, 3)
+        XCTAssertEqual(m.size, 3*3)
+        XCTAssertEqual(m.shape.rows, 3)
+        XCTAssertEqual(m.shape.columns, 3)
+        XCTAssertEqual(m[1], [2.2,2.2,2.2])
+        XCTAssertEqual(m[1,1], 2.2)
+    }
+
+    func matrixCreationWithInvalidFloatArrayOfArray() {
+        var m = Matrix<Float>([[1.1,1.1,1.1],[2.2], [3,3,3]])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Float>([[], [], []])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Float>([[],[2], [3,3,3]])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Float>([[2], [], [3,3,3]])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Float>([[2], [3,3,3], []])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Float>([[]])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+    }
+
+    func matrixCreationWithInvalidDoubleArrayOfArray() {
+        var m = Matrix<Double>([[1.1,1.1,1.1],[2.2], [3,3,3]])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Double>([[], [], []])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Double>([[],[2], [3,3,3]])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Double>([[2], [], [3,3,3]])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Double>([[2], [3,3,3], []])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Double>([[]])
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, 0)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+    }
+
+    func matrixCreationWithValidFloatArray() {
+        var m = Matrix<Float>([1.0,2.0,3.0,4.0,5.0,6.0], 2, 3)
+        XCTAssertEqual(m.rows, 2)
+        XCTAssertEqual(m.columns, 3)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 2)
+        XCTAssertEqual(m.shape.columns, 3)
+        XCTAssertEqual(m[1], [4.0,5.0,6.0])
+        XCTAssertEqual(m[1,1], 5.0)
+
+        m = Matrix<Float>([10.001], 1, 1)
+        XCTAssertEqual(m.rows, 1)
+        XCTAssertEqual(m.columns, 1)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 1)
+        XCTAssertEqual(m.shape.columns, 1)
+        XCTAssertEqual(m[0], [10.001])
+        XCTAssertEqual(m[0,0], 10.001)
+    }
+
+    func matrixCreationWithInvalidFloatArray() {
+        var m = Matrix<Float>([1.0,2.0,3.0,4.0,5.0,6.0, 7.0], 2, 3)
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Float>([], 0, 0)
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Float>([], 1, 1)
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+    }
+
+    func matrixCreationWithValidDoubleArray() {
+        var m = Matrix<Double>([1.0,2.0,3.0,4.0,5.0,6.0], 2, 3)
+        XCTAssertEqual(m.rows, 2)
+        XCTAssertEqual(m.columns, 3)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 2)
+        XCTAssertEqual(m.shape.columns, 3)
+        XCTAssertEqual(m[1], [4.0,5.0,6.0])
+        XCTAssertEqual(m[1,1], 5.0)
+
+        m = Matrix<Double>([10.001], 1, 1)
+        XCTAssertEqual(m.rows, 1)
+        XCTAssertEqual(m.columns, 1)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 1)
+        XCTAssertEqual(m.shape.columns, 1)
+        XCTAssertEqual(m[0], [10.001])
+        XCTAssertEqual(m[0,0], 10.001)
+    }
+
+    func matrixCreationWithInvalidDoubleArray() {
+        var m = Matrix<Double>([1.0,2.0,3.0,4.0,5.0,6.0, 7.0], 2, 3)
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Double>([], 0, 0)
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+
+        m = Matrix<Double>([], 1, 1)
+        XCTAssertEqual(m.rows, 0)
+        XCTAssertEqual(m.columns, 0)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 0)
+        XCTAssertEqual(m.shape.columns, 0)
+    }
+
+    static var __allTests__MatrixInitTests = [
+        ("matrixCreationWithDefaultValue", matrixCreationWithDefaultValue),
+        ("matrixCreationWithFloatGivenValue", matrixCreationWithFloatGivenValue),
+        ("matrixCreationWithDoubleDefaultValue", matrixCreationWithDoubleDefaultValue),
+        ("matrixCreationWithDoubleGivenValue", matrixCreationWithDoubleGivenValue),
+        ("matrixCreationWithFloatArrayOfArray", matrixCreationWithFloatArrayOfArray),
+        ("matrixCreationWithDoubleArrayOfArray", matrixCreationWithDoubleArrayOfArray),
+        ("matrixCreationWithInvalidFloatArrayOfArray", matrixCreationWithInvalidFloatArrayOfArray),
+        ("matrixCreationWithInvalidDoubleArrayOfArray", matrixCreationWithInvalidFloatArrayOfArray),
+        ("matrixCreationWithValidFloatArray", matrixCreationWithValidFloatArray),
+        ("matrixCreationWithInvalidFloatArray", matrixCreationWithInvalidFloatArray),
+        ("matrixCreationWithInvalidDoubleArray", matrixCreationWithInvalidDoubleArray),
+    ]
+}
+
+final class MatrixIndexingOperations: XCTestCase {
+
+    private var m = Matrix<Double>(2, 3)
+
+    override func setUp() {
+        super.setUp()
+        m = Matrix<Double>([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], 2, 3)
+        XCTAssertEqual(m.rows, 2)
+        XCTAssertEqual(m.columns, 3)
+        XCTAssertEqual(m.size, m.rows*m.columns)
+        XCTAssertEqual(m.shape.rows, 2)
+        XCTAssertEqual(m.shape.columns, 3)
+    }
+
+    func validIndexTest() {
+        var v:Double = 1.0
+        for rowId in 0..<m.rows {
+            for colId in 0..<m.columns {
+                XCTAssertEqual(m[Int(rowId), Int(colId)], v)
+                v += 1.0
+            }
+        }
+        XCTAssertEqual(m[0, 5], 3.0)
+        XCTAssertEqual(m[1, 5], 6.0)
+    }
+
+    func negetiveIndexesTest() {
+        XCTAssertEqual(m[-1], [4.0, 5.0, 6.0])
+        XCTAssertEqual(m[-2], [4.0, 5.0, 6.0])
+        XCTAssertEqual(m[-3], [4.0, 5.0, 6.0])
+    }
+
+    func outOfBoundIndexesTest() {
+        XCTAssertEqual(m[1], [4.0, 5.0, 6.0])
+        XCTAssertEqual(m[2], [4.0, 5.0, 6.0])
+        XCTAssertEqual(m[3], [4.0, 5.0, 6.0])
+    }
+
+    static var __allTests__MatrixIndexTests = [
+        ("validIndexTest", validIndexTest),
+        ("negetiveIndexesTest", negetiveIndexesTest),
+        ("outOfBoundIndexesTest", outOfBoundIndexesTest),
     ]
 }
