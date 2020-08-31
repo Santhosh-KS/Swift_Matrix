@@ -47,9 +47,4 @@ final class MatrixOperationsTests: XCTestCase {
         XCTAssertEqual(false, twoByThreeDouble <= twoByTwoDouble)
         XCTAssertEqual(true, twoByTwoDouble <= twoByThreeDouble)
     }
-    static var __allTests__MatrixOperationsTests = [
-        ("testMatrixEquality", testMatrixEquality),
-        ("testMatrixGreaterOrEqual", testMatrixGreaterOrEqual),
-        ("testMatrixSmallerOrEqual", testMatrixSmallerOrEqual),
-    ]
 }

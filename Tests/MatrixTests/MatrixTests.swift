@@ -242,22 +242,6 @@ final class MatrixIntAndUintInitTests: XCTestCase {
         XCTAssertEqual(m.shape.rows, 0)
         XCTAssertEqual(m.shape.columns, 0)
     }
-
-
-    static var __allTests__MatrixInitTests = [
-        ("matrixCreationIntWithDefaultValue", matrixCreationIntWithDefaultValue),
-        ("matrixCreationIntWithGivenValue", matrixCreationIntWithGivenValue),
-        ("matrixCreationUintWithDefaultValue", matrixCreationUintWithDefaultValue),
-        ("matrixCreationUintWithGivenValue", matrixCreationUintWithGivenValue),
-        ("matrixCreationWithIntArrayOfArray", matrixCreationWithIntArrayOfArray),
-        ("matrixCreationWithUintArrayOfArray", matrixCreationWithUintArrayOfArray),
-        ("matrixCreationWithInvalidUintArrayOfArray", matrixCreationWithInvalidUintArrayOfArray),
-        ("matrixCreationWithInvalidIntArrayOfArray", matrixCreationWithInvalidIntArrayOfArray),
-        ("matrixCreationWithValidIntArray", matrixCreationWithValidIntArray),
-        ("matrixCreationWithValidUintArray", matrixCreationWithValidUintArray),
-        ("matrixCreationWithInvalidIntArray", matrixCreationWithInvalidIntArray),
-        ("matrixCreationWithInvalidUintArray", matrixCreationWithInvalidUintArray),
-    ]
 }
 
 final class MatrixFloatAndDoubleInitTests: XCTestCase {
@@ -501,20 +485,6 @@ final class MatrixFloatAndDoubleInitTests: XCTestCase {
         XCTAssertEqual(m.shape.rows, 0)
         XCTAssertEqual(m.shape.columns, 0)
     }
-
-    static var __allTests__MatrixInitTests = [
-        ("matrixCreationWithDefaultValue", matrixCreationWithDefaultValue),
-        ("matrixCreationWithFloatGivenValue", matrixCreationWithFloatGivenValue),
-        ("matrixCreationWithDoubleDefaultValue", matrixCreationWithDoubleDefaultValue),
-        ("matrixCreationWithDoubleGivenValue", matrixCreationWithDoubleGivenValue),
-        ("matrixCreationWithFloatArrayOfArray", matrixCreationWithFloatArrayOfArray),
-        ("matrixCreationWithDoubleArrayOfArray", matrixCreationWithDoubleArrayOfArray),
-        ("matrixCreationWithInvalidFloatArrayOfArray", matrixCreationWithInvalidFloatArrayOfArray),
-        ("matrixCreationWithInvalidDoubleArrayOfArray", matrixCreationWithInvalidFloatArrayOfArray),
-        ("matrixCreationWithValidFloatArray", matrixCreationWithValidFloatArray),
-        ("matrixCreationWithInvalidFloatArray", matrixCreationWithInvalidFloatArray),
-        ("matrixCreationWithInvalidDoubleArray", matrixCreationWithInvalidDoubleArray),
-    ]
 }
 
 final class MatrixIndexingOperations: XCTestCase {
@@ -554,10 +524,4 @@ final class MatrixIndexingOperations: XCTestCase {
         XCTAssertEqual(m[2], [4.0, 5.0, 6.0])
         XCTAssertEqual(m[3], [4.0, 5.0, 6.0])
     }
-
-    static var __allTests__MatrixIndexTests = [
-        ("validIndexTest", validIndexTest),
-        ("negetiveIndexesTest", negetiveIndexesTest),
-        ("outOfBoundIndexesTest", outOfBoundIndexesTest),
-    ]
 }
