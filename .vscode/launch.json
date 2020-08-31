@@ -8,10 +8,10 @@
                 "type": "lldb",
                 "request": "launch",
                 "name": "Running ${workspaceFolderBasename}",
-                "program": "${workspaceFolder}/.build/debug/${workspaceFolderBasename}PackageTests.xctest",
+                "program": "${workspaceFolder}/.build/debug/MatrixPackageTests.xctest",
                 "args": [],
                 "cwd": "${workspaceFolder}",
-                "preLaunchTask": "swift-test"
+                //"preLaunchTask": "swift-test"
             },
         ]
 }

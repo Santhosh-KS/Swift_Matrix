@@ -6,7 +6,7 @@
         {
             "label": "swift-build",
             "type": "shell",
-            "command": "swift build",
+            "command": "swift build --enable-test-discovery",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
@@ -19,7 +19,7 @@
         {
             "label": "swift-test",
             "type": "shell",
-            "command": "swift test",
+            "command": "swift test --enable-test-discovery",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
