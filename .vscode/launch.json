@@ -11,7 +11,7 @@
                 "program": "${workspaceFolder}/.build/debug/MatrixPackageTests.xctest",
                 "args": [],
                 "cwd": "${workspaceFolder}",
-                //"preLaunchTask": "swift-test"
+                "preLaunchTask": "swift-test"
             },
         ]
 }
