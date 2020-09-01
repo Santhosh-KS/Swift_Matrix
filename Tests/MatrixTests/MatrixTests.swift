@@ -349,8 +349,8 @@ final class MatrixIndexingOperations: XCTestCase {
 
         XCTAssertEqual(m[-1, -1], 6.0)
         XCTAssertEqual(m[-10, -10], 6.0)
-        XCTAssertEqual(m[-1, 0], 6.0)
-        XCTAssertEqual(m[-1, 3], 4.0)
+        XCTAssertEqual(m[-1, 0], 4.0)
+        XCTAssertEqual(m[-1, 3], 6.0)
     }
 
     func testOutOfBoundIndexes() {
