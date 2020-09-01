@@ -95,12 +95,12 @@ extension Matrix {
     }
 
     public init(_ array:[Element], withRows rows:Int) {
-        let columns: Int = array.count % rows
+        let columns: Int = array.count / rows
         self.init(array, rows, columns)
     }
 
     public init(_ array:[Element], withColumns columns:Int) {
-        let rows: Int = array.count % columns
+        let rows: Int = array.count / columns
         self.init(array, rows, columns)
     }
 }
@@ -121,15 +121,5 @@ extension Array  where Element : Numeric & Comparable {
             }
         }
         return retArray
-    }
-
-    internal func reduceTo2d(withRows row:Int) -> [[Element]] {
-        let col:Int = self.count/row
-        return reduceTo2d(row, col)
-    }
-
-    internal func reduceTo2d(withColumns col:Int) -> [[Element]] {
-        let row:Int = self.count/col
-        return reduceTo2d(row, col)
     }
 }
